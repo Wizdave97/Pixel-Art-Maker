@@ -24,24 +24,41 @@ function getRowColumn(event){
     }
     else {grid[1]=Number(event.target.value)
     }
-    
+    event.stopPropagation()
 }
 for (let input of Array.from(inputs)){
-    input.addEventListener('change',getRowColumn)
+    input.addEventListener('input',getRowColumn)
 }
+let pixels=null;
+let submit=document.querySelector('#submit');
 
-document.addEventListener('keydown',event=>{
-    if(event.key=='Enter'){
+submit.addEventListener('click',event=>{
+    
         if(container.lastElementChild.nodeName=='TABLE' && 
-        container.lastElementChild.childElementCount==20) return
+        container.lastElementChild.childElementCount>0) return
         else{
             makeGrid().then(table=>{
-                container.appendChild(table)
-                console.log(container.lastElementChild.childElementCount)
+                container.appendChild(table);
+                pixels=document.querySelectorAll('td')
+                for(let pixel of Array.from(pixels)){
+                        pixel.addEventListener('mousedown',event=>{
+                            if(event.button==0)event.target.style.backgroundColor=colour;
+                            
+                        })
+                    
+                }      
             })
         }
           
-    }
+    event.preventDefault();
   
 })
+const colourPicker=document.querySelector('.colour');
+let colour=colourPicker.value;
+colourPicker.addEventListener('change',event=>{
+    colour=event.target.value;
+    console.log(colour)
+    event.stopPropagation();
+})
+
 
