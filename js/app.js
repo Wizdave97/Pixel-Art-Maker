@@ -12,8 +12,7 @@ function makeGrid(){
             }
             table.appendChild(tr);
         }
-        console.log(table)
-        console.log(grid)
+        
         resolve(table)
     
     })
@@ -33,13 +32,16 @@ for (let input of Array.from(inputs)){
 
 document.addEventListener('keydown',event=>{
     if(event.key=='Enter'){
-        if(container.lastElementChild.nodeName=='TABLE') return
+        if(container.lastElementChild.nodeName=='TABLE' && 
+        container.lastElementChild.childElementCount==20) return
         else{
             makeGrid().then(table=>{
                 container.appendChild(table)
+                console.log(container.lastElementChild.childElementCount)
             })
         }
           
     }
+  
 })
 
